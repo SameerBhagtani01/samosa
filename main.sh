@@ -91,11 +91,33 @@ fi
 # Install Yay (AUR Helper)
 echo -e "\n--- Installing Yay ---"
 pacman -S --noconfirm --needed git base-devel
+
 if ! sudo -u "$USER" command -v yay &> /dev/null; then
-    sudo -u "$USER" git clone https://aur.archlinux.org/yay.git /tmp/yay
-    chown -R "$USER:$USER" /tmp/yay
-    sudo -u "$USER" sh -c "cd /tmp/yay && makepkg -si --noconfirm"
-    rm -rf /tmp/yay
+    # Clone, build, and cleanup MUST be done as the unprivileged user ($USER)
+
+    echo "Attempting to install Yay as user: $USER"
+    
+    # Use a subshell executed as the unprivileged user to handle all three steps
+    sudo -u "$USER" sh -c "
+        INSTALL_DIR='/tmp/yay'
+        
+        # 1. Clone
+        git clone https://aur.archlinux.org/yay.git \$INSTALL_DIR || exit 1
+        
+        # 2. Build and Install (This is where the 'not allowed as root' error is avoided)
+        cd \$INSTALL_DIR
+        makepkg -si --noconfirm
+        
+        # 3. Cleanup
+        rm -rf \$INSTALL_DIR
+    "
+    
+    # Check if the last command (the sudo sh -c block) succeeded
+    if [ $? -ne 0 ]; then
+        echo "Error: Failed to install Yay. Check the output above."
+        exit 1
+    fi
+    
 else
     echo "Yay is already installed."
 fi
