@@ -7,7 +7,7 @@ Welcome to the **SAMOSA** setup! This repository contains all my configuration f
 To get the complete SAMOSA experience on a fresh, minimal Arch install, just run this command (it handles installing Git, cloning the repo, and running the setup script with `sudo`):
 
 ```bash
-curl -L https://raw.githubusercontent.com/SameerBhagtani01/samosa/refs/heads/main/install.sh | sh
+curl -L https://raw.githubusercontent.com/SameerBhagtani01/samosa/main/install.sh | sh
 ```
 
 ---

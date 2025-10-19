@@ -43,11 +43,14 @@ install_aur_packages() {
     echo -e "\n--- Installing AUR Packages via Yay ---"
     local packages_file="$PACKAGE_LISTS/aur_packages.txt"
     if [ -f "$packages_file" ]; then
-        if ! sudo -u "$USER" command -v yay &> /dev/null; then
-            echo "Error: yay is not installed or not in \$PATH for $USER. Skipping AUR installs."
+        
+        if ! sudo -u "$USER" command -v /usr/bin/yay &> /dev/null; then 
+            echo "Error: yay was not successfully installed to /usr/bin. Skipping AUR installs."
             return
         fi
-        sudo -u "$USER" yay -S --noconfirm --needed $(cat "$packages_file")
+        
+        echo "Executing yay as user: $USER"
+        sudo -u "$USER" /usr/bin/yay -S --noconfirm --needed $(cat "$packages_file")
     else
         echo "Warning: $packages_file not found. Skipping AUR installs."
     fi
@@ -86,9 +89,9 @@ else
     pacman -Sy --noconfirm
 fi
 
-# Install Yay (AUR Helper)
+# Install Yay
 echo -e "\n--- Installing Yay ---"
-if ! sudo -u "$USER" command -v yay &> /dev/null; then
+if ! sudo -u "$USER" command -v /usr/bin/yay &> /dev/null; then # Check with full path
     echo "Attempting to install Yay as user: $USER"
     sudo -u "$USER" sh -c "
         INSTALL_DIR='/tmp/yay'
@@ -162,6 +165,6 @@ sed -i 's/^#GRUB_DISABLE_OS_PROBER=false/GRUB_DISABLE_OS_PROBER=false/' /etc/def
 grub-mkconfig -o /boot/grub/grub.cfg
 
 echo -e "\n\n***************************************"
-echo "*** Setup Complete!                                 ***"
+echo "*** Setup Complete!                   ***"
 echo "*** Please reboot the system to enjoy using Samosa! ***"
 echo "***************************************"
