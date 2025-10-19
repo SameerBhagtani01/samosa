@@ -1,0 +1,13 @@
+visual-studio-code-bin
+ttf-cascadia-code-nerd
+walker
+elephant-calc
+elephant-clipboard
+elephant-symbols
+elephant-runner
+elephant-todo
+elephant-websearch
+elephant-files
+blender
+postman-bin
+mongodb-compass-bin

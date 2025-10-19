@@ -1,0 +1,9 @@
+# Initialize Starship prompt
+eval "$(starship init bash)"
+
+# Set Alacritty as the default terminal emulator
+export TERMINAL=alacritty
+export TERM=xterm-256color
+
+# Optional alias to open Alacritty easily
+alias terminal='alacritty'

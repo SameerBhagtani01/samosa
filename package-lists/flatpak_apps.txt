@@ -1,0 +1,5 @@
+org.localsend.localsend_app
+org.gimp.GIMP
+org.inkscape.Inkscape
+com.discordapp.Discord
+com.github.xournalpp.xournalpp

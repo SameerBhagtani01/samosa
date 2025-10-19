@@ -1,0 +1,28 @@
+[env]
+TERM = "xterm-256color"
+
+[window]
+padding.x = 10
+padding.y = 10
+
+opacity = 0.7
+blur = true
+
+[font]
+size = 14.0
+
+[font.normal]
+family = "CaskaydiaCove Nerd Font"
+
+[font.bold]
+family = "CaskaydiaCove Nerd Font"
+style = "Bold"
+
+[font.italic]
+family = "CaskaydiaCove Nerd Font"
+style = "Italic"
+
+[keyboard]
+bindings = [
+{ key="F11", action="ToggleFullScreen" }
+]
