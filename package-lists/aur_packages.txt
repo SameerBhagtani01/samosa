@@ -1,4 +1,5 @@
 visual-studio-code-bin
+brave-bin
 ttf-cascadia-code-nerd
 walker
 elephant-calc

@@ -28,8 +28,6 @@ USER_HOME="/home/$USER"
 echo "Starting automated Arch setup for user: $USER"
 
 # --- Function Definitions ---
-
-# Install packages using the list file
 install_pacman_packages() {
     echo -e "\n--- Installing PACMAN Packages ---"
     local packages_file="$PACKAGE_LISTS/pacman_packages.txt"
@@ -41,7 +39,6 @@ install_pacman_packages() {
     fi
 }
 
-# Install AUR packages using the list file
 install_aur_packages() {
     echo -e "\n--- Installing AUR Packages via Yay ---"
     local packages_file="$PACKAGE_LISTS/aur_packages.txt"
@@ -56,7 +53,6 @@ install_aur_packages() {
     fi
 }
 
-# Install Flatpak apps using the list file
 install_flatpak_apps() {
     echo -e "\n--- Installing Flatpak Applications ---"
     local apps_file="$PACKAGE_LISTS/flatpak_apps.txt"
@@ -75,9 +71,11 @@ install_flatpak_apps() {
 
 # --- Execution Steps ---
 
+echo -e "\n--- Installing Core Utilities (git, rsync, base-devel) ---"
+pacman -S --noconfirm --needed git rsync base-devel
+
 # Enable Multilib and Sync
 echo -e "\n--- Enabling Multilib Repository ---"
-pacman -Sy --noconfirm # Initial sync
 if [ -f "$SYSTEM_CONFIGS/etc-pacman.conf" ]; then
     cp "$SYSTEM_CONFIGS/etc-pacman.conf" /etc/pacman.conf
     echo "Using custom pacman.conf. Syncing repositories..."
@@ -90,34 +88,19 @@ fi
 
 # Install Yay (AUR Helper)
 echo -e "\n--- Installing Yay ---"
-pacman -S --noconfirm --needed git base-devel
-
 if ! sudo -u "$USER" command -v yay &> /dev/null; then
-    # Clone, build, and cleanup MUST be done as the unprivileged user ($USER)
-
     echo "Attempting to install Yay as user: $USER"
-    
-    # Use a subshell executed as the unprivileged user to handle all three steps
     sudo -u "$USER" sh -c "
         INSTALL_DIR='/tmp/yay'
-        
-        # 1. Clone
         git clone https://aur.archlinux.org/yay.git \$INSTALL_DIR || exit 1
-        
-        # 2. Build and Install (This is where the 'not allowed as root' error is avoided)
         cd \$INSTALL_DIR
-        makepkg -si --noconfirm
-        
-        # 3. Cleanup
+        makepkg -si --noconfirm || exit 1
         rm -rf \$INSTALL_DIR
     "
-    
-    # Check if the last command (the sudo sh -c block) succeeded
     if [ $? -ne 0 ]; then
         echo "Error: Failed to install Yay. Check the output above."
         exit 1
     fi
-    
 else
     echo "Yay is already installed."
 fi
@@ -125,10 +108,6 @@ fi
 # Install Core and Required Packages
 install_pacman_packages
 install_aur_packages
-
-# Install Brave Browser
-echo -e "\n--- Installing Brave Browser ---"
-curl -fsS https://dl.brave.com/install.sh | sh
 
 # Enable Ly Display Manager
 echo -e "\n--- Enabling Ly Service ---"
@@ -140,14 +119,12 @@ usermod -aG video,audio,input "$USER"
 
 # System Configuration Edits
 echo -e "\n--- Copying System Configuration Files to /etc/ ---"
-# Copy files from system_configs to /etc/
 cp "$SYSTEM_CONFIGS/etc-vconsole.conf" /etc/vconsole.conf
 cp "$SYSTEM_CONFIGS/etc-systemd-logind.conf" /etc/systemd/logind.conf
 cp "$SYSTEM_CONFIGS/etc-ly-config.ini" /etc/ly/config.ini
 
 # Copy all User Configs
 echo -e "\n--- Copying User Configs (Dotfiles) ---"
-# Copy .config and .local/bin
 sudo -u "$USER" rsync -a "$USER_CONFIGS/." "$USER_HOME/"
 
 # Place wallpaper in ~/Pictures
@@ -185,7 +162,6 @@ sed -i 's/^#GRUB_DISABLE_OS_PROBER=false/GRUB_DISABLE_OS_PROBER=false/' /etc/def
 grub-mkconfig -o /boot/grub/grub.cfg
 
 echo -e "\n\n***************************************"
-echo "*** Setup Complete!                   ***"
-echo "*** Please reboot the system to start ***"
-echo "*** Hyprland and Ly Display Manager.  ***"
+echo "*** Setup Complete!                                 ***"
+echo "*** Please reboot the system to enjoy using Samosa! ***"
 echo "***************************************"
