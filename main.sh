@@ -91,15 +91,35 @@ fi
 
 # Install Yay
 echo -e "\n--- Installing Yay ---"
-if ! sudo -u "$USER" command -v /usr/bin/yay &> /dev/null; then # Check with full path
+# Check if Yay is already installed as the target user
+if ! sudo -u "$USER" command -v /usr/bin/yay &> /dev/null; then 
     echo "Attempting to install Yay as user: $USER"
+    
+    # Use a temporary directory *owned by the user* for the build process
+    INSTALL_DIR="/tmp/yay_build_$USER"
+    
+    # Run all steps as the target user ($USER)
     sudo -u "$USER" sh -c "
-        INSTALL_DIR='/tmp/yay'
-        git clone https://aur.archlinux.org/yay.git \$INSTALL_DIR || exit 1
-        cd \$INSTALL_DIR
-        makepkg -si --noconfirm || exit 1
-        rm -rf \$INSTALL_DIR
+        set -e # Ensure the subshell exits immediately on any error
+
+        # 1. Clean up old build attempts and create fresh directory
+        rm -rf '$INSTALL_DIR'
+        mkdir -p '$INSTALL_DIR'
+        
+        # 2. Clone the repository
+        echo 'Cloning yay repository...'
+        git clone https://aur.archlinux.org/yay.git '$INSTALL_DIR'
+        
+        # 3. Build and install the package
+        echo 'Building and installing yay...'
+        cd '$INSTALL_DIR'
+        makepkg -si --noconfirm 
+        
+        # 4. Clean up temporary files
+        echo 'Cleaning up build directory...'
+        rm -rf '$INSTALL_DIR'
     "
+    # Check the exit status of the entire sudo -u command
     if [ $? -ne 0 ]; then
         echo "Error: Failed to install Yay. Check the output above."
         exit 1
