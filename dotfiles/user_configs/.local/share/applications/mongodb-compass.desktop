@@ -1,0 +1,11 @@
+[Desktop Entry]
+Name=MongoDB Compass
+Comment=The MongoDB GUI
+GenericName=MongoDB Compass
+Exec=mongodb-compass --password-store="gnome-libsecret" --ignore-additional-command-line-flags %U
+Icon=mongodb-compass
+Type=Application
+StartupNotify=true
+Categories=Office;Database;Building;Debugger;IDE;GUIDesigner;Profiling;
+MimeType=x-scheme-handler/mongodb;x-scheme-handler/mongodb+srv;
+

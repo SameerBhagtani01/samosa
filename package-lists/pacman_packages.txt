@@ -10,8 +10,6 @@ starship
 terminus-font
 brightnessctl
 wireplumber
-pavucontrol
-network-manager-applet
 nautilus
 gvfs
 gvfs-smb
@@ -35,7 +33,6 @@ gnome-calculator
 loupe
 mpv
 flatpak
-jdk-openjdk
 libreoffice-still
 ntfs-3g
 exfat-utils
@@ -43,3 +40,8 @@ fuse-exfat
 dosfstools
 gnome-disk-utility
 os-prober
+gnome-themes-extra
+xournalpp
+btop
+iwd
+impala

@@ -27,7 +27,7 @@
             "7": "7",
             "8": "8",
             "9": "9",
-            "active": "󱓻"
+            "active": ""
         },
         "persistent-workspaces": {
             "1": [],
@@ -52,7 +52,8 @@
         "tooltip-format-ethernet": "⇣{bandwidthDownBytes}  ⇡{bandwidthUpBytes}",
         "tooltip-format-disconnected": "Disconnected",
         "interval": 3,
-        "spacing": 1
+        "spacing": 1,
+	"on-click": "uwsm-app -- alacritty -e impala"
     },
     "battery": {
         "format": "{capacity}% {icon}",

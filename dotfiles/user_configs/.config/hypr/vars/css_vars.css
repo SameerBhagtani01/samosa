@@ -1,0 +1,7 @@
+/* format for colors :- #RRGGBBAA */
+
+@define-color color_primary #2196f3;
+@define-color color_inactive #ffffff77;
+
+@define-color color_accent1 #ffffff;
+@define-color color_accent2 #000000;

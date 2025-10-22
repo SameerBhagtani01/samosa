@@ -13,7 +13,7 @@ USER_CONFIGS="$REPO_ROOT/dotfiles/user_configs"
 
 # Check for root privileges
 if [[ $EUID -ne 0 ]]; then
-    echo "Error: This script must be run with sudo (e.g., sudo ./install.sh)."
+    echo "Error: This script must be run with sudo."
     exit 1
 fi
 
@@ -25,7 +25,7 @@ fi
 
 USER="$SUDO_USER"
 USER_HOME="/home/$USER"
-echo "Starting automated Arch setup for user: $USER"
+echo "Starting automated Samosa setup for user: $USER"
 
 # --- Function Definitions ---
 install_pacman_packages() {
@@ -118,7 +118,7 @@ systemctl enable ly.service
 
 # Add User to Groups
 echo -e "\n--- Adding $USER to necessary groups (video, audio, input) ---"
-usermod -aG video,audio,input "$USER"
+usermod -aG video,audio,input,network "$USER"
 
 # System Configuration Edits
 echo -e "\n--- Copying System Configuration Files to /etc/ ---"
@@ -134,11 +134,6 @@ sudo -u "$USER" rsync -a "$USER_CONFIGS/." "$USER_HOME/"
 echo -e "--- Copying Wallpaper to $USER_HOME/Pictures ---"
 sudo -u "$USER" mkdir -p "$USER_HOME/Pictures"
 cp "$OTHER_FILES/wallpaper.jpg" "$USER_HOME/Pictures/wallpaper.jpg"
-
-# Create Qalculate Config
-echo -e "--- Creating Qalculate configuration files ---"
-sudo -u "$USER" mkdir -p "$USER_HOME/.config/qalculate"
-sudo -u "$USER" touch "$USER_HOME/.config/qalculate/qalc.cfg"
 
 # Append to bashrc
 echo -e "\n--- Appending content to ~/.bashrc ---"

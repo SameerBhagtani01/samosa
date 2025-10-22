@@ -1,5 +1,5 @@
 * {
-    background-color: #1a1a1a;
+    background-color: transparent;
     color: #ffffff;
 
     border: none;
@@ -19,9 +19,12 @@
 
 #workspaces button {
     all: initial;
-    padding: 0 6px;
-    margin: 0 1.5px;
+    padding: 0 20px;
+    margin: 0 3px;
     min-width: 9px;
+
+    background-color: #000000;
+    border-radius: 5px;
 }
 
 #workspaces button.empty {
@@ -34,19 +37,34 @@
 #bluetooth,
 #pulseaudio {
     min-width: 12px;
-    margin: 0 7.5px;
+    margin: 0 3px;
+    padding: 0 20px;
+
+    background-color: #000000;
+    border-radius: 5px;
+
 }
 
 #custom-expand-icon {
     margin-right: 7px;
+    padding: 0 20px;
+
+    background-color: #000000;
+    border-radius: 5px;
+
 }
 
 tooltip {
     padding: 2px;
+    background-color: #000000;
 }
 
 #clock {
     margin-left: 8.75px;
+    padding: 0 20px;
+
+    background-color: black;
+    border-radius: 5px;
 }
 
 .hidden {
