@@ -46,12 +46,11 @@ install_aur_packages() {
     if [ -f "$packages_file" ]; then
         echo "Executing yay as user: $USER"
         
-        sudo -u "$USER" yay -S --noconfirm --needed $(cat "$packages_file")
+        sudo -u "$USER" yay -S --needed $(cat "$packages_file")
         
         if [ $? -ne 0 ]; then
             echo "Error: AUR package installation failed. Check if 'yay' is installed and in the user's PATH."
         fi
-        
     else
         echo "Warning: $packages_file not found. Skipping AUR installs."
     fi
