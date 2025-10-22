@@ -47,3 +47,4 @@ xournalpp
 btop
 iwd
 impala
+less
