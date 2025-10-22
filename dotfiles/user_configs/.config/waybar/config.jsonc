@@ -53,7 +53,7 @@
         "tooltip-format-disconnected": "Disconnected",
         "interval": 3,
         "spacing": 1,
-	"on-click": "uwsm-app -- alacritty -e impala"
+        "on-click": "uwsm-app -- alacritty -e impala"
     },
     "battery": {
         "format": "{capacity}% {icon}",
