@@ -42,15 +42,16 @@ install_pacman_packages() {
 install_aur_packages() {
     echo -e "\n--- Installing AUR Packages via Yay ---"
     local packages_file="$PACKAGE_LISTS/aur_packages.txt"
+    
     if [ -f "$packages_file" ]; then
+        echo "Executing yay as user: $USER"
         
-        if ! sudo -u "$USER" command -v yay &> /dev/null; then 
-            echo "Error: yay command not found in user's PATH. Skipping AUR installs."
-            return
+        sudo -u "$USER" yay -S --noconfirm --needed $(cat "$packages_file")
+        
+        if [ $? -ne 0 ]; then
+            echo "Error: AUR package installation failed. Check if 'yay' is installed and in the user's PATH."
         fi
         
-        echo "Executing yay as user: $USER"
-        sudo -u "$USER" yay -S --noconfirm --needed $(cat "$packages_file")
     else
         echo "Warning: $packages_file not found. Skipping AUR installs."
     fi
