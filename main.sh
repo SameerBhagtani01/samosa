@@ -39,21 +39,21 @@ install_pacman_packages() {
     fi
 }
 
-install_aur_packages() {
-    echo -e "\n--- Installing AUR Packages via Yay ---"
-    local packages_file="$PACKAGE_LISTS/aur_packages.txt"
+# install_aur_packages() {
+#     echo -e "\n--- Installing AUR Packages via Yay ---"
+#     local packages_file="$PACKAGE_LISTS/aur_packages.txt"
     
-    if [ -f "$packages_file" ]; then
-        echo "Executing yay as user: $USER"
-        sudo -u "$USER" yay -S --noconfirm --needed $(cat "$packages_file")
+#     if [ -f "$packages_file" ]; then
+#         echo "Executing yay as user: $USER"
+#         sudo -u "$USER" yay -S --noconfirm --needed $(cat "$packages_file")
         
-        if [ $? -ne 0 ]; then
-            echo "Error: AUR package installation failed. Check if 'yay' is installed and in the user's PATH."
-        fi
-    else
-        echo "Warning: $packages_file not found. Skipping AUR installs."
-    fi
-}
+#         if [ $? -ne 0 ]; then
+#             echo "Error: AUR package installation failed. Check if 'yay' is installed and in the user's PATH."
+#         fi
+#     else
+#         echo "Warning: $packages_file not found. Skipping AUR installs."
+#     fi
+# }
 
 install_flatpak_apps() {
     echo -e "\n--- Installing Flatpak Applications ---"
@@ -108,7 +108,7 @@ fi
 
 # Install Core and Required Packages
 install_pacman_packages
-install_aur_packages
+# install_aur_packages
 
 # --- Configure iwd and Disable wpa_supplicant ---
 echo -e "\n--- Configuring NetworkManager to use iwd and disabling wpa_supplicant ---"
@@ -157,12 +157,12 @@ echo -e "--- Setting Permissions for power-menu.sh ---"
 chmod +x "$USER_HOME/.local/bin/power-menu.sh"
 
 # Enable Elephant services
-echo -e "\n--- Enabling Elephant Services ---"
-runuser -l "$USER" -c "elephant service enable"
+# echo -e "\n--- Enabling Elephant Services ---"
+# runuser -l "$USER" -c "elephant service enable"
 
-if [ $? -ne 0 ]; then
-    echo "Elephant service enable command failed."
-fi
+# if [ $? -ne 0 ]; then
+#     echo "Elephant service enable command failed."
+# fi
 
 # Flatpak Applications
 install_flatpak_apps
@@ -174,5 +174,6 @@ grub-mkconfig -o /boot/grub/grub.cfg
 
 echo -e "\n\n***************************************"
 echo "*** Setup Complete!                   ***"
-echo "*** Please reboot the system to enjoy using Samosa! ***"
+echo "*** Please run the following command and then reboot to enjoy Samosa: ***"
+echo "yay -S --needed visual-studio-code-bin brave-bin ttf-cascadia-code-nerd walker elephant-calc elephant-clipboard elephant-symbols && elephant service enable"
 echo "***************************************"

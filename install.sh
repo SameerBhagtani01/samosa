@@ -31,5 +31,5 @@ sudo sh main.sh
 
 echo ""
 echo "############################################################"
-echo "Installation process successful. Cleaning up temporary files."
+echo "Cleaning up temporary files."
 echo "############################################################"

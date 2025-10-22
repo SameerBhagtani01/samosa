@@ -4,7 +4,7 @@ Welcome to the **SAMOSA** setup! This repository contains all my configuration f
 
 ## 🚀 Installation
 
-To get the complete SAMOSA experience, follow these two steps:
+To get the complete SAMOSA experience, follow these three steps:
 
 ### Step 1: Base Arch Installation
 
@@ -23,8 +23,22 @@ Start with a minimal base installation of Arch Linux. If using the official `arc
 | Network Configuration          | Use `NetworkManager`                           |
 | Timezone                       | Set yours                                      |
 
+---
+
 ### Step 2: Reboot and run the install script
 
 ```bash
 curl -L https://raw.githubusercontent.com/SameerBhagtani01/samosa/main/install.sh | sh
 ```
+
+---
+
+### Step 3: Run the following command
+
+| NOTE: Do not reboot. Perform this step right after step 2 without rebooting the system. Only reboot at the very end.
+
+```bash
+yay -S --needed visual-studio-code-bin brave-bin ttf-cascadia-code-nerd walker elephant-calc elephant-clipboard elephant-symbols && elephant service enable
+```
+
+---
