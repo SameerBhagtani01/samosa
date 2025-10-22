@@ -132,8 +132,20 @@ fi
 install_pacman_packages
 install_aur_packages
 
-# Enable Ly Display Manager
-echo -e "\n--- Enabling Ly Service ---"
+# --- Configure iwd and Disable wpa_supplicant ---
+echo -e "\n--- Configuring NetworkManager to use iwd and disabling wpa_supplicant ---"
+
+mkdir -p /etc/NetworkManager/conf.d/
+echo -e "[device]\nwifi.backend=iwd" | tee /etc/NetworkManager/conf.d/wifi-backend-iwd.conf
+
+systemctl stop wpa_supplicant.service
+systemctl disable wpa_supplicant.service
+systemctl mask wpa_supplicant.service
+echo "iwd configuration complete."
+# ------------------------------------------------------------------
+
+# Enable ly Display Manager
+echo -e "\n--- Enabling ly Service ---"
 systemctl enable ly.service
 
 # Add User to Groups
@@ -180,6 +192,6 @@ sed -i 's/^#GRUB_DISABLE_OS_PROBER=false/GRUB_DISABLE_OS_PROBER=false/' /etc/def
 grub-mkconfig -o /boot/grub/grub.cfg
 
 echo -e "\n\n***************************************"
-echo "*** Setup Complete!                   ***"
+echo "*** Setup Complete!                   ***"
 echo "*** Please reboot the system to enjoy using Samosa! ***"
 echo "***************************************"
