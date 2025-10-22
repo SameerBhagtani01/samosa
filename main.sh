@@ -4,7 +4,7 @@ set -euo pipefail # Exit on error, unset variable, and pipe failure
 REPO_ROOT=$(dirname "$(readlink -f "$0")")
 
 # Define path variables for clarity
-PACKAGE_LISTS="$REPO_ROOT/package-lists"
+PACKAGE_LISTS="$REPO_ROOT/package_lists"
 OTHER_FILES="$REPO_ROOT/other"
 SYSTEM_CONFIGS="$REPO_ROOT/dotfiles/system_configs"
 USER_CONFIGS="$REPO_ROOT/dotfiles/user_configs"
@@ -158,7 +158,11 @@ chmod +x "$USER_HOME/.local/bin/power-menu.sh"
 
 # Enable Elephant services
 echo -e "\n--- Enabling Elephant Services ---"
-sudo -u "$USER" elephant service enable || echo "Warning: Elephant service enable command failed."
+runuser -l "$USER" -c "elephant service enable"
+
+if [ $? -ne 0 ]; then
+    echo "Elephant service enable command failed."
+fi
 
 # Flatpak Applications
 install_flatpak_apps

@@ -12,14 +12,14 @@ Start with a minimal base installation of Arch Linux. If using the official arch
 
 | Section                        | Option                                         |
 | ------------------------------ | ---------------------------------------------- |
-| Mirrors                        | Select regions > Your country                  |
-| Disk Configuration             | Partitioning -> Partition as per your disk     |
+| Mirrors and repositories       | Select regions > Your country                  |
+| Disk Configuration             | Partitioning -> (Partition as you wish)        |
 | Bootloader                     | Grub                                           |
 | Hostname                       | Give any name to your computer                 |
 | Authentication > Root Password | Set yours                                      |
 | Authentication > User Account  | Add a user > Superuser: Yes > Confirm and exit |
-| Applications > Audio           | `pipewire`                                     |
 | Applications > Bluetooth       | yes                                            |
+| Applications > Audio           | `pipewire`                                     |
 | Network Configuration          | Use `NetworkManager`                           |
 | Timezone                       | Set yours                                      |
 
