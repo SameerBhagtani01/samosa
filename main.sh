@@ -44,13 +44,13 @@ install_aur_packages() {
     local packages_file="$PACKAGE_LISTS/aur_packages.txt"
     if [ -f "$packages_file" ]; then
         
-        if ! sudo -u "$USER" command -v /usr/bin/yay &> /dev/null; then 
-            echo "Error: yay was not successfully installed to /usr/bin. Skipping AUR installs."
+        if ! sudo -u "$USER" command -v yay &> /dev/null; then 
+            echo "Error: yay command not found in user's PATH. Skipping AUR installs."
             return
         fi
         
         echo "Executing yay as user: $USER"
-        sudo -u "$USER" /usr/bin/yay -S --noconfirm --needed $(cat "$packages_file")
+        sudo -u "$USER" yay -S --noconfirm --needed $(cat "$packages_file")
     else
         echo "Warning: $packages_file not found. Skipping AUR installs."
     fi
@@ -91,35 +91,15 @@ fi
 
 # Install Yay
 echo -e "\n--- Installing Yay ---"
-# Check if Yay is already installed as the target user
-if ! sudo -u "$USER" command -v /usr/bin/yay &> /dev/null; then 
+if ! sudo -u "$USER" command -v yay &> /dev/null; then
     echo "Attempting to install Yay as user: $USER"
-    
-    # Use a temporary directory *owned by the user* for the build process
-    INSTALL_DIR="/tmp/yay_build_$USER"
-    
-    # Run all steps as the target user ($USER)
     sudo -u "$USER" sh -c "
-        set -e # Ensure the subshell exits immediately on any error
-
-        # 1. Clean up old build attempts and create fresh directory
-        rm -rf '$INSTALL_DIR'
-        mkdir -p '$INSTALL_DIR'
-        
-        # 2. Clone the repository
-        echo 'Cloning yay repository...'
-        git clone https://aur.archlinux.org/yay.git '$INSTALL_DIR'
-        
-        # 3. Build and install the package
-        echo 'Building and installing yay...'
-        cd '$INSTALL_DIR'
-        makepkg -si --noconfirm 
-        
-        # 4. Clean up temporary files
-        echo 'Cleaning up build directory...'
-        rm -rf '$INSTALL_DIR'
+        INSTALL_DIR='/tmp/yay'
+        git clone https://aur.archlinux.org/yay.git \$INSTALL_DIR || exit 1
+        cd \$INSTALL_DIR
+        makepkg -si --noconfirm || exit 1
+        rm -rf \$INSTALL_DIR
     "
-    # Check the exit status of the entire sudo -u command
     if [ $? -ne 0 ]; then
         echo "Error: Failed to install Yay. Check the output above."
         exit 1
@@ -130,7 +110,7 @@ fi
 
 # Install Core and Required Packages
 install_pacman_packages
-install_aur_packages
+install_aur_packages # This should now proceed correctly
 
 # --- Configure iwd and Disable wpa_supplicant ---
 echo -e "\n--- Configuring NetworkManager to use iwd and disabling wpa_supplicant ---"
