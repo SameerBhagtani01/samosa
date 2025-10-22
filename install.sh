@@ -29,19 +29,7 @@ echo "Executing the main installation script..."
 cd "$INSTALL_DIR"
 sudo sh main.sh
 
-echo "Installing essential packages via Yay"
-yay -S --needed visual-studio-code-bin brave-bin ttf-cascadia-code-nerd walker elephant-calc elephant-clipboard elephant-symbols
-
-echo "Enabling required services"
-elephant service enable || echo "Warning: Elephant service enable command failed."
-
 echo ""
 echo "############################################################"
 echo "Cleaning up temporary files."
 echo "############################################################"
-rm -rf "$INSTALL_DIR"
-
-echo -e "\n\n***************************************"
-echo "*** Setup Complete!                   ***"
-echo "*** Reboot your system and enjoy Samosa! ***"
-echo "***************************************"
