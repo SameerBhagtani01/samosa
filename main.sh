@@ -173,6 +173,7 @@ sed -i 's/^#GRUB_DISABLE_OS_PROBER=false/GRUB_DISABLE_OS_PROBER=false/' /etc/def
 grub-mkconfig -o /boot/grub/grub.cfg
 
 echo -e "\n\n***************************************"
-echo "*** Setup Complete!                   ***"
-echo "*** Reboot your system and enjoy Samosa! ***"
+echo "*** Setup Complete! ***"
+echo "*** Please run the following command and then reboot to enjoy Samosa: ***"
+echo "yay -S --needed visual-studio-code-bin brave-bin ttf-cascadia-code-nerd walker elephant-calc elephant-clipboard elephant-symbols && elephant service enable"
 echo "***************************************"
