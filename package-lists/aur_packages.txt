@@ -5,6 +5,3 @@ walker
 elephant-calc
 elephant-clipboard
 elephant-symbols
-blender
-postman-bin
-mongodb-compass-bin

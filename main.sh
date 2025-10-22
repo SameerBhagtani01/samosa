@@ -45,8 +45,7 @@ install_aur_packages() {
     
     if [ -f "$packages_file" ]; then
         echo "Executing yay as user: $USER"
-        
-        sudo -u "$USER" yay -S --needed $(cat "$packages_file")
+        sudo -u "$USER" yay -S --noconfirm --needed $(cat "$packages_file")
         
         if [ $? -ne 0 ]; then
             echo "Error: AUR package installation failed. Check if 'yay' is installed and in the user's PATH."
@@ -70,7 +69,6 @@ install_flatpak_apps() {
         echo "Warning: $apps_file not found. Skipping Flatpak installs."
     fi
 }
-
 
 # --- Execution Steps ---
 
@@ -110,7 +108,7 @@ fi
 
 # Install Core and Required Packages
 install_pacman_packages
-install_aur_packages # This should now proceed correctly
+install_aur_packages
 
 # --- Configure iwd and Disable wpa_supplicant ---
 echo -e "\n--- Configuring NetworkManager to use iwd and disabling wpa_supplicant ---"
@@ -122,7 +120,6 @@ systemctl stop wpa_supplicant.service
 systemctl disable wpa_supplicant.service
 systemctl mask wpa_supplicant.service
 echo "iwd configuration complete."
-# ------------------------------------------------------------------
 
 # Enable ly Display Manager
 echo -e "\n--- Enabling ly Service ---"
