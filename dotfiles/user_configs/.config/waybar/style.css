@@ -1,5 +1,4 @@
 * {
-    background-color: transparent;
     color: #ffffff;
 
     border: none;
@@ -7,6 +6,10 @@
     min-height: 0;
     font-family: "CaskaydiaCove Nerd Font";
     font-size: 16px;
+}
+
+window#waybar {
+    background-color: transparent;
 }
 
 .modules-left {
@@ -29,6 +32,14 @@
 
 #workspaces button.empty {
     opacity: 0.5;
+}
+
+#clock {
+    margin-left: 8.75px;
+    padding: 0 20px;
+
+    background-color: #000000;
+    border-radius: 5px;
 }
 
 #tray,
@@ -59,12 +70,8 @@ tooltip {
     background-color: #000000;
 }
 
-#clock {
-    margin-left: 8.75px;
-    padding: 0 20px;
-
-    background-color: black;
-    border-radius: 5px;
+#tray menu {
+    background-color: #000000;
 }
 
 .hidden {
