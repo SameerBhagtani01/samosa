@@ -8,7 +8,7 @@ case "$output" in
         hyprlock
         ;;
     *Logout)
-        hyprctl dispatch exit 0
+        uwsm stop
         ;;
     *Suspend)
         systemctl suspend
