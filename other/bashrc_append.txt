@@ -7,3 +7,8 @@ export TERM=xterm-256color
 
 # Optional alias to open Alacritty easily
 alias terminal='alacritty'
+
+# Add ~/.local/bin to the PATH for user executables
+if [ -d "$HOME/.local/bin" ]; then
+    export PATH="$HOME/.local/bin:$PATH"
+fi
