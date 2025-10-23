@@ -127,7 +127,7 @@ systemctl enable ly.service
 
 # Add User to Groups
 echo -e "\n--- Adding $USER to necessary groups (video, audio, input) ---"
-usermod -aG video,audio,input,network "$USER"
+usermod -aG video,audio,input,network,uucp "$USER"
 
 # System Configuration Edits
 echo -e "\n--- Copying System Configuration Files to /etc/ ---"
