@@ -153,8 +153,8 @@ echo -e "--- Fixing ownership of user files ---"
 chown -R "$USER:$USER" "$USER_HOME/.config" "$USER_HOME/.local" "$USER_HOME/.bashrc" "$USER_HOME/Pictures"
 
 # Make power-menu.sh executable
-echo -e "--- Setting Permissions for power-menu.sh ---"
-chmod +x "$USER_HOME/.local/bin/power-menu.sh"
+echo -e "--- Setting Permissions for power-menu ---"
+chmod +x "$USER_HOME/.local/bin/power-menu"
 
 # Enable Elephant services
 # echo -e "\n--- Enabling Elephant Services ---"
